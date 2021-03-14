@@ -127,8 +127,10 @@ namespace softwear
    * Writes a value to a register on the IMU 
    */
   function writeLSM6DS3Reg(reg: number, val: number): void {
-      let test = reg << 8 | val
-      pins.i2cWriteNumber(LSM6DS3Addr, reg << 8 | val, NumberFormat.Int16BE)
+      //let test = reg << 8 | val
+      //pins.i2cWriteNumber(LSM6DS3Addr, reg, NumberFormat.UInt8BE)
+      //pins.i2cWriteNumber(LSM6DS3Addr, val, NumberFormat.UInt8BE)
+      pins.i2cWriteNumber(LSM6DS3Addr, reg << 8 | val, NumberFormat.UInt16BE)
   }
 
   /**
@@ -161,19 +163,19 @@ namespace softwear
 
   //% weight=41 blockGap=8 blockId="gyroX" block="gyroX"    
   export function gyroX(): number {
-    let gyrox = readLSM6DS3Reg(LSM6DS3_ACC_GYRO_OUTX_L_G, NumberFormat.Int16LE)
+    let gyrox = readLSM6DS3Reg(LSM6DS3_ACC_GYRO_OUTX_L_G, NumberFormat.UInt16LE)
     return gyrox
   }
 
   //% weight=41 blockGap=8 blockId="gyroY" block="gyroY"    
   export function gyroY(): number {
-    let gyroy = readLSM6DS3Reg(LSM6DS3_ACC_GYRO_OUTY_L_G, NumberFormat.Int16LE)
+    let gyroy = readLSM6DS3Reg(LSM6DS3_ACC_GYRO_OUTY_L_G, NumberFormat.UInt16LE)
     return gyroy
   }
 
   //% weight=41 blockGap=8 blockId="gyroZ" block="gyroZ"    
   export function gyroZ(): number {
-    let gyroz = readLSM6DS3Reg(LSM6DS3_ACC_GYRO_OUTZ_L_G, NumberFormat.Int16LE)
+    let gyroz = readLSM6DS3Reg(LSM6DS3_ACC_GYRO_OUTZ_L_G, NumberFormat.UInt16LE)
     return gyroz
   }
 
@@ -189,4 +191,15 @@ namespace softwear
     return whoAmI
   }
 
+    //% weight=41 blockGap=8 blockId="startSensor" block="startSensor"    
+  export function startSensor(): void {
+    writeLSM6DS3Reg(LSM6DS3_ACC_GYRO_CTRL1_XL, 0x66)
+    writeLSM6DS3Reg(LSM6DS3_ACC_GYRO_CTRL2_G, 0x6D)
+  }
+
+//% weight=41 blockGap=8 blockId="readCtrl1Xl" block="readCtrl1Xl"    
+  export function readCtrl1Xl(): number {
+    let ctrl = readLSM6DS3Reg(LSM6DS3_ACC_GYRO_CTRL1_XL, NumberFormat.UInt8LE)
+    return ctrl
+  }
 }
