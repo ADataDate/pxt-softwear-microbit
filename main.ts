@@ -148,6 +148,10 @@ namespace softwear
     return accelx
   }
   
+  /**
+   This object will retrieve Y-Acceleration Data from the IMU register located at 0x24. 
+   readLSM6DS3Reg(LSM6DS3_ACC_GYRO_OUTY_L_XL, NumberFormat.Int16LE)
+   **/
 
   //% weight=41 blockGap=8 blockId="accelY" block="accelY"    
   export function accelY(): number {
